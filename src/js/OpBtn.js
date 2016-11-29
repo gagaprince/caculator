@@ -7,7 +7,7 @@ var OpBtn = Btn.extend({
         Btn.prototype.ctor.call(this,id);
     },
     postMsg:function(){
-        var e = new QEvent(QEvent.eventName.OPBTN);
+        var e = new QEvent(QEvent.EventName.OPBTN);
         e.setData(this.operate);
         em.postMsg(e);
     },

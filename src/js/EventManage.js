@@ -27,7 +27,11 @@ QEvent.EventName={
     MINUSBTN:"minusbtn_click",
     MULTIBTN:"multibtn_click",
     DIVIBTN:"divibtn_click",
-    OPBTN:"opbtn_clcik"
+    OPBTN:"opbtn_clcik",
+    EQUELBTN:"equle_click",
+    CLEARBTN:"clear_click",
+    DOTBTN:"dotbtn_click",
+    PMBTN:"pmbtn_click"
 }
 
 

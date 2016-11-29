@@ -7,12 +7,16 @@ var main = {
     delBtn:null,
     opBtns:[],
     caculator:null,
+    dotBtn:null,
+    pmBtn:null,
     init:function(){
         this.initResult();
         this.initNumBtn();
         this.initAcBtn();
         this.initDelBtn();
         this.initOpBtn();
+        this.initDotBtn();
+        this.initPmBtn();
         this.initCaculator();
     },
     initResult: function () {
@@ -43,6 +47,12 @@ var main = {
         opBtns.push(multiBtn);
         opBtns.push(diviBtn);
         opBtns.push(equalBtn);
+    },
+    initDotBtn: function () {
+        this.dotBtn = new DotBtn("dotBtn");
+    },
+    initPmBtn:function(){
+        this.pmBtn = new PmBtn("pmBtn");
     },
     initCaculator:function(){
         this.caculator = new CaculatorManager();
