@@ -1,50 +1,58 @@
 "use strict";
+var em = EventManager;
+function CaculatorManager (){
+    this.init();
+}
+var CacularStates={
+    LEFTINPUT:0,
+    RIGHTINPUT:1,
+    ENSURE:2
+}
+CaculatorManager.prototype={
+    resultContent:0,
 
-var caculator = {
-    result:null,
-    numBtns:[],
-    acBtn:null,
-    delBtn:null,
-    opBtns:[],
+    leftNum:null,
+    rightNum:null,
+    currentNum:null,
+
+    state:CacularStates.LEFTINPUT,//当前计算状态
     init:function(){
-        this.initResult();
-        this.initNumBtn();
-        this.initAcBtn();
-        this.initDelBtn();
-        this.initOpBtn();
+        this.initData();
+        this.initListener();
+        this.postReuslt();
     },
-    initResult: function () {
-        this.result = new Result("result");
+    initData:function(){
+        this.leftNum = new CacuNum();
+        this.rightNum = new CacuNum();
+        this.currentNum = this.leftNum;
     },
-    initNumBtn:function(){
-        var numBtns = this.numBtns;
-        for(var i=0;i<10;i++){
-            var numBtn = new NumBtn("numBtn"+i,i);
-            numBtns.push(numBtn);
-        }
+    postReuslt:function(){
+        //向屏幕发送一个消息 改变屏幕内容
+        var result = this.resultContent;
+        var e = new QEvent(QEvent.EventName.RENDER);
+        e.setData(result);
+        em.postMsg(e);
     },
-    initAcBtn:function(){
-        this.acBtn = new AcBtn("acBtn");
+    initListener:function(){
+        //接收按键消息
+        var _this = this;
+        //接收数字键
+        em.addEventListener(QEvent.EventName.NUMBTN,function(e){
+            var num = e.getData();
+            _this.excuteNum(num);
+        });
+        em.addEventListener(QEvent.EventName.DELBTN,function(e){
+            _this.delNum();
+        });
     },
-    initDelBtn:function(){
-        this.delBtn = new DelBtn("delBtn");
+    excuteNum:function(num){
+        this.currentNum.addNum(num);
+        this.resultContent = this.currentNum.parseAll();
+        this.postReuslt();
     },
-    initOpBtn:function(){
-        var opBtns = this.opBtns;
-        var plusBtn = new PlusBtn("plusBtn");
-        var minusBtn = new MinusBtn("minusBtn");
-        var multiBtn = new MultiBtn("multiBtn");
-        var diviBtn = new DiviBtn("diviBtn");
-        var equalBtn = new EqualBtn("equalBtn");
-        opBtns.push(plusBtn);
-        opBtns.push(minusBtn);
-        opBtns.push(multiBtn);
-        opBtns.push(diviBtn);
-        opBtns.push(equalBtn);
+    delNum:function(){
+        this.currentNum.removeNum();
+        this.resultContent = this.currentNum.parseAll();
+        this.postReuslt();
     }
-};
-
-
-document.addEventListener("DOMContentLoaded",function(){
-    caculator.init();
-},false);
+}

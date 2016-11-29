@@ -1,15 +1,17 @@
 "use strict";
 //加减乘除按钮
+var em = EventManager;
 var OpBtn = Btn.extend({
-    num:null,
-    name:"",
+    eventName:"",
     ctor:function(id){
         Btn.prototype.ctor.call(this,id);
     },
-    initListener:function(){
-        var _this = this;
-        this.btn.addEventListener("click",function(){
-            alert(_this.name+"被点击了");
-        },false);
+    postMsg:function(){
+        var e = new QEvent(QEvent.eventName.OPBTN);
+        e.setData(this.operate);
+        em.postMsg(e);
+    },
+    operate:function(a,b){
+        console.log("这个方法会被重写");
     }
 });

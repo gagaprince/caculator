@@ -12,7 +12,11 @@ Btn.prototype={
         this.initListener();
     },
     initListener:function(){
-
+        var _this = this;
+        this.btn.addEventListener("click",function(){
+            //点击了数字键
+            _this.postMsg();
+        },false);
     }
 };
 Btn.extend=function(prototype){
