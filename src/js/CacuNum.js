@@ -58,6 +58,10 @@ CacuNum.prototype={
             if(floatPart.length>2){
                 floatPart = floatPart.substring(0,floatPart.length-1);
             }
+            if(floatPart.length==2){
+                floatPart=0;
+                this.dotType=0;
+            }
             this.floatPart = floatPart;
         }else{
             var intPart = this.intPart+"";
@@ -92,7 +96,10 @@ CacuNum.prototype={
         this.all = parseInt(this.intPart);
         if(this.dotType) {
             var floatPart = this.floatPart+"";
-            this.all += "." + floatPart.substring(2, floatPart.length);
+            if(floatPart.length>2){
+                this.all += "." + floatPart.substring(2, floatPart.length);
+            }
+            this.all = parseFloat(this.all);
         }
         if(this.isMinus){
             this.all = -this.all;
